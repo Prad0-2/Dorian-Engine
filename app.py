@@ -81,4 +81,4 @@ with col2:
 st.markdown("---")
 st.markdown("This MVP showcases Google Cloud Run, Firestore, Vertex AI (Gemini & Imagen), Cloud Storage, and Cloud Build for CI/CD.")
 
-# Triggering initial build
+# Triggering initial build - Second trigger
