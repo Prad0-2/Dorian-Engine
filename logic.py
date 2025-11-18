@@ -109,3 +109,15 @@ def generate_avatar(prompt, user_id, is_initial=False):
     db.save_avatar(user_id, blob.public_url, is_initial=is_initial)
     
     return blob.public_url
+
+def upload_base_photo(user_id, file_bytes):
+    """
+    Uploads the user's base photo to GCS and returns its public URL.
+    """
+    bucket = storage_client.bucket(GCS_BUCKET_NAME)
+    path = f"base_photos/{user_id}/base.png"
+    blob = bucket.blob(path)
+    blob.upload_from_string(file_bytes, content_type='image/png')
+    blob.make_public()
+    
+    return blob.public_url

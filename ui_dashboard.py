@@ -25,9 +25,24 @@ def show():
     # Sidebar for User Setup
     with st.sidebar:
         st.header("👤 Your Details")
+        
+        if user_data.get('basePhotoUrl'):
+            st.image(user_data['basePhotoUrl'], caption="Your Base Photo", use_column_width=True)
+
         name = st.text_input("Your Name", user_data.get('name', ''))
         goal = st.text_input("Your Main Goal", user_data.get('mainGoal', ''))
         
+        uploaded_photo = st.file_uploader("Upload/Change Your Base Photo", type=["png", "jpg", "jpeg"])
+
+        if uploaded_photo is not None:
+            if st.button("Upload Photo"):
+                with st.spinner("Uploading..."):
+                    photo_bytes = uploaded_photo.getvalue()
+                    photo_url = logic.upload_base_photo(USER_ID, photo_bytes)
+                    db.update_user_data(USER_ID, {'basePhotoUrl': photo_url})
+                    st.success("Base photo uploaded!")
+                    st.experimental_rerun()
+
         if st.button("Update Details"):
             db.update_user_data(USER_ID, {'name': name, 'mainGoal': goal})
             st.success("Details updated!")
