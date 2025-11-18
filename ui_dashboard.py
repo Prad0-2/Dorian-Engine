@@ -29,9 +29,6 @@ def show():
         if user_data.get('basePhotoUrl'):
             st.image(user_data['basePhotoUrl'], caption="Your Base Photo", use_column_width=True)
 
-        name = st.text_input("Your Name", user_data.get('name', ''))
-        goal = st.text_input("Your Main Goal", user_data.get('mainGoal', ''))
-        
         uploaded_photo = st.file_uploader("Upload/Change Your Base Photo", type=["png", "jpg", "jpeg"])
 
         if uploaded_photo is not None:
@@ -43,6 +40,9 @@ def show():
                     st.success("Base photo uploaded!")
                     st.experimental_rerun()
 
+        name = st.text_input("Your Name", user_data.get('name', ''))
+        goal = st.text_input("Your Main Goal", user_data.get('mainGoal', ''))
+        
         if st.button("Update Details"):
             db.update_user_data(USER_ID, {'name': name, 'mainGoal': goal})
             st.success("Details updated!")
