@@ -1,5 +1,6 @@
 # This Cloud Build configuration automates building your Docker image
 # and deploying it to Cloud Run. This acts as your "MCP Toolbox" for CI/CD.
+# This comment is to trigger a new build.
 
 steps:
 # Step 1: Build the Docker image
