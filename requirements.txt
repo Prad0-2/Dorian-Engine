@@ -5,3 +5,4 @@ google-cloud-storage
 pandas
 watchdog
 firebase-admin
+fb-streamlit-auth

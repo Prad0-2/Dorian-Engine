@@ -1,3 +1,5 @@
+import os
+import json
 import firebase_admin
 from firebase_admin import credentials, firestore
 from datetime import datetime
@@ -5,12 +7,19 @@ from datetime import datetime
 def init_db():
     """
     Initializes the Firebase Admin SDK.
-    Uses application default credentials, which works in Google Cloud environments.
+    Uses the service account credentials from the environment variable if available.
     """
     if not firebase_admin._apps:
-        firebase_admin.initialize_app(credentials.ApplicationDefault(), {
-            'projectId': 'dorian-engine-478520',
-        })
+        creds_json = os.environ.get("FIREBASE_ADMIN_SDK_CREDENTIALS")
+        if creds_json:
+            creds_dict = json.loads(creds_json)
+            cred = credentials.Certificate(creds_dict)
+            firebase_admin.initialize_app(cred)
+        else:
+            # Fallback for local development or environments without the secret
+            firebase_admin.initialize_app(credentials.ApplicationDefault(), {
+                'projectId': 'dorian-engine-478520',
+            })
     return firestore.client()
 
 db = init_db()
