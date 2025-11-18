@@ -15,3 +15,6 @@ steps:
   args: ['run', 'deploy', 'dorian-engine', '--image', 'gcr.io/$PROJECT_ID/dorian-engine:$COMMIT_SHA', '--region', 'us-central1', '--allow-unauthenticated']
   env:
     - 'PROJECT_ID=$PROJECT_ID'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
