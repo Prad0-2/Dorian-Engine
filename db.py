@@ -13,7 +13,7 @@ def init_db():
         creds_json = os.environ.get("FIREBASE_ADMIN_SDK_CREDENTIALS")
         if creds_json:
             creds_dict = json.loads(creds_json)
-            creds_dict['private_key'] = creds_dict['private_key'].replace('\\\\n', '\\n')
+            creds_dict['private_key'] = creds_dict['private_key'].replace('\\n', '\n')
             cred = credentials.Certificate(creds_dict)
             firebase_admin.initialize_app(cred)
         else:
