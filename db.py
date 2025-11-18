@@ -7,14 +7,12 @@ from datetime import datetime
 def init_db():
     """
     Initializes the Firebase Admin SDK.
-    Uses the service account credentials from the environment variable if available.
+    Uses the mounted secret file if available, otherwise falls back to other methods.
     """
     if not firebase_admin._apps:
-        creds_json = os.environ.get("FIREBASE_ADMIN_SDK_CREDENTIALS")
-        if creds_json:
-            creds_dict = json.loads(creds_json)
-            creds_dict['private_key'] = creds_dict['private_key'].replace('\\n', '\n')
-            cred = credentials.Certificate(creds_dict)
+        secret_path = '/etc/secrets/firebase-admin-sdk-credentials.json'
+        if os.path.exists(secret_path):
+            cred = credentials.Certificate(secret_path)
             firebase_admin.initialize_app(cred)
         else:
             # Fallback for local development or environments without the secret
