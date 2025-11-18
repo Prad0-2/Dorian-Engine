@@ -1,6 +1,7 @@
 import streamlit as st
 from fb_streamlit_auth import fb_streamlit_auth
 import os
+import json
 
 def show():
     """
@@ -24,6 +25,11 @@ def show():
         "measurementId": os.environ.get("FIREBASE_MEASUREMENT_ID"),
         "databaseURL": "", # Not needed for Firestore
     }
+
+    # --- DEBUGGING ---
+    print("Firebase Config:")
+    print(json.dumps(firebase_config, indent=2))
+    # --- END DEBUGGING ---
 
     # Perform authentication
     user = fb_streamlit_auth(firebase_config)
